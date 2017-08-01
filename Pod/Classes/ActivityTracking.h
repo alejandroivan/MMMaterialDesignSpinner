@@ -32,6 +32,13 @@
 /** Sets the line width of the spinner's circle. */
 @property (nonatomic) CGFloat lineWidth;
 
+/**
+ Specifies how much margin the spinner should have from its bounds.
+ Useful when you want to put a background color to the spinner view but the spinner itself draws to the edges.
+ Default is 0.0f
+ */
+@property (nonatomic) CGFloat marginWidth;
+
 /** Sets the line cap of the spinner's circle. */
 @property (nonatomic, strong) NSString * _Nullable lineCap;
 

@@ -25,6 +25,7 @@ static NSString *kMMRingRotationAnimationKey = @"mmmaterialdesignspinner.rotatio
 @synthesize timingFunction=_timingFunction;
 @synthesize duration=_duration;
 @synthesize percentComplete=_percentComplete;
+@synthesize marginWidth=_marginWidth;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -73,7 +74,7 @@ static NSString *kMMRingRotationAnimationKey = @"mmmaterialdesignspinner.rotatio
 
 - (CGSize)intrinsicContentSize
 {
-    return CGSizeMake(self.bounds.size.width, self.bounds.size.height);
+    return CGSizeMake(self.bounds.size.width - 2.0f * self.marginWidth, self.bounds.size.height - 2.0f * self.marginWidth);
 }
 
 - (void)tintColorDidChange {
@@ -172,12 +173,15 @@ static NSString *kMMRingRotationAnimationKey = @"mmmaterialdesignspinner.rotatio
 
 - (void)updatePath {
     CGPoint center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    CGFloat radius = MIN(CGRectGetWidth(self.bounds) / 2, CGRectGetHeight(self.bounds) / 2) - self.progressLayer.lineWidth / 2;
+    CGFloat radius = MIN(
+                         ( CGRectGetWidth(self.bounds) - 2.0f * self.marginWidth ) / 2,
+                         ( CGRectGetHeight(self.bounds) - 2.0f * self.marginWidth ) / 2
+                         ) - self.progressLayer.lineWidth / 2;
     CGFloat startAngle = (CGFloat)(0);
     CGFloat endAngle = (CGFloat)(2*M_PI);
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:startAngle endAngle:endAngle clockwise:YES];
     self.progressLayer.path = path.CGPath;
-
+    
     self.progressLayer.strokeStart = 0.f;
     self.progressLayer.strokeEnd = self.percentComplete;
 }
